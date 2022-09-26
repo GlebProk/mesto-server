@@ -1,0 +1,26 @@
+{
+  "name": "mesto-server",
+  "version": "0.0.1",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "npx eslint",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "Gleb Prokofyev",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "eslint": "^8.23.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "express": "^4.18.1",
+    "mongoose": "^6.6.1"
+  },
+  "keywords": [],
+  "description": "",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
