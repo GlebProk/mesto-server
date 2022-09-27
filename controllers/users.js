@@ -5,7 +5,7 @@ const NotFoundError = require('../errors/NotFoundError');
 
 module.exports.findUser = (req, res, next) => {
   User.find({})
-    .then((users) => res.send(users))
+    .then((users) => res.send({ data: users }))
     .catch((err) => {
       next(err);
     });
@@ -16,7 +16,7 @@ module.exports.createUser = (req, res, next) => {
 
   User.create({ name, about, avatar }) // создадим документ на основе пришедших данных
     // вернём записанные в базу данные
-    .then((user) => res.send(user))
+    .then((user) => res.send({ data: user }))
     // данные не записались, вернём ошибку
     .catch((err) => {
       if (err.name === 'ValidationError') {
