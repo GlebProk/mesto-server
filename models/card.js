@@ -23,9 +23,7 @@ const cardSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now(),
-    // в ТЗ к проекту было так прописано, не совсем понимаю, что нужно изменить
-    // "createdAt — дата создания, тип Date, значение по умолчанию Date.now"
+    default: Date.now,
   },
 });
 
