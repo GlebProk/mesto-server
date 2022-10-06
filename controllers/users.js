@@ -42,7 +42,7 @@ module.exports.createUser = (req, res, next) => {
         next(new InputError('Переданы некорректные данные при создании пользователя.'));
         return;
       }
-      if (err.name === 'MongoServerError') {
+      if (err.code === 11000) {
         next(new ConflictError('Пользователь с таким email уже существует'));
         return;
       }
