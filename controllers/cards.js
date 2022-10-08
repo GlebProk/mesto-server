@@ -26,22 +26,25 @@ module.exports.createCard = (req, res, next) => {
 };
 
 module.exports.findByIdCard = (req, res, next) => {
-  Card.findByIdAndRemove(req.params.cardId)
+  const { cardId } = req.params;
+  Card.findById(cardId)
     .orFail(() => {
-      next(new NotFoundError(`Карточка с указанным идентификатором ${req.params.cardId} не найдена.`));
+      next(new NotFoundError(`Карточка с указанным идентификатором ${cardId} не найдена.`));
     })
     .then((card) => {
       if (card.owner.toString() !== req.user._id) {
-        next(new ForbiddenError('Недостаточно прав для удаления карточки'));
+        next(new ForbiddenError('Нельзя удалить чужую карточку'));
       }
-      res.status(200).send({ message: 'Карточка удалена' });
+      Card.findByIdAndRemove(req.params.cardId)
+        .then(() => res.status(200).send({ message: 'Карточка удалена' }))
+        .catch((err) => next(err));
     })
     .catch((err) => {
-      if (err.statusCode === 404) {
-        next(new NotFoundError(`Карточка с указанным идентификатором ${req.params.cardId} не найдена.`));
-      } else if (err.name === 'CastError') {
-        next(new InputError('Передан некорректный _id карточки'));
-      } else next(err);
+      if (err.name === 'CastError') {
+        next(new InputError('Некорректные данные'));
+      } else {
+        next(err);
+      }
     });
 };
 

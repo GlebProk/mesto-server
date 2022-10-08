@@ -83,13 +83,11 @@ module.exports.findByIdUser = (req, res, next) => {
 module.exports.findByUsersMe = (req, res, next) => {
   User.findById(req.user._id)
     .orFail(() => {
-      next(new AuthError('Необходимо выполнить вход'));
+      next(new NotFoundError(`Пользователь по указанному идентификатору ${req.user._id} не найден.`));
     })
     .then((user) => res.send({ data: user }))
     .catch((err) => {
-      if (err.statusCode === 404) {
-        next(new NotFoundError(`Пользователь по указанному идентификатору ${req.user._id} не найден.`));
-      } else if (err.name === 'CastError') {
+      if (err.name === 'CastError') {
         next(new InputError('Передан некорректный _id профиля'));
       } else next(err);
     });

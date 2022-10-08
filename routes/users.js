@@ -10,7 +10,7 @@ router.get('/me', findByUsersMe);
 
 router.get('/:userId', celebrate({
   params: Joi.object().keys({
-    userId: Joi.string().required().hex(),
+    userId: Joi.string().required().hex().length(24),
   }),
 }), findByIdUser);
 

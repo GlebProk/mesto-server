@@ -37,7 +37,7 @@ app.post('/signup', celebrate({
 app.use('/users', auth, require('./routes/users'));
 app.use('/cards', auth, require('./routes/cards'));
 
-app.use((req, res, next) => {
+app.use(auth, (req, res, next) => {
   next(new NotFoundError('Cтраница не найдена'));
 });
 
